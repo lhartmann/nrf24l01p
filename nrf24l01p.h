@@ -10,13 +10,30 @@
 
 #include <stdint.h>
 
-// Select proper Hardware Abstraction Layer:
-// Pin mappings belong in the selected HAL.
+////////////////////////////////////////////////////////////////////////////
+// Select proper Hardware Abstraction Layer:                              //
+// Using compile-time defines to avoid unnecessary library edits.         //
+////////////////////////////////////////////////////////////////////////////
 
-//#include "nrf24l01p_hal_arduino_bitbang.h"
-//#include "nrf24l01p_hal_msp430_bitbang.h"
+// Arduino GPIO bitbang
+#ifdef NRF_HAL_ARDUINO_BITBANG
+#include "nrf24l01p_hal_arduino_bitbang.h"
+#endif
+
+// MSP430 GPIO bitbang
+#ifdef NRF_HAL_MSP430_BITBANG
+#include "nrf24l01p_hal_msp430_bitbang.h"
+#endif
+
+// EFM8BB1 GPIO bitbang
+#ifdef NRF_HAL_EFM8BB1_BITBANG
 #include "nrf24l01p_hal_efm8bb1_bitbang.h"
-//#include "nrf24l01p_hal_tm4c1294_bitbang.h"
+#endif
+
+// TM4C1294 GPIO bitbang
+#ifdef NRF_HAL_TM4C1294_BITBANG
+#include "nrf24l01p_hal_tm4c1294_bitbang.h"
+#endif
 
 // BitBanging SPI byte exchange, if required.
 #ifdef NRF_SPI_IS_BITBANG
